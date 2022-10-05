@@ -17,8 +17,20 @@ backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/initcpio.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
-source=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/v$pkgver/calamares-$pkgver.tar.gz")
-sha256sums=('7591b9b60738bdba7b9de2b8da5462ab21006db06a006f0dd21ac5b832711dd2')
+source=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/v$pkgver/calamares-$pkgver.tar.gz"
+	"ucode_main.py"
+	"ucode_module.desc"
+	"dm_main.py"
+	"packages_main.py"
+	"calamares-polkit")
+
+sha256sums=('7591b9b60738bdba7b9de2b8da5462ab21006db06a006f0dd21ac5b832711dd2'
+			'SKIP'
+			'SKIP'
+			'SKIP'
+			'SKIP'
+			'SKIP')
+			
 
 prepare() {
 	cd ${srcdir}/calamares-${pkgver}
@@ -32,6 +44,13 @@ prepare() {
 	printf 'Version: %s-%s' "${_ver}" "${pkgrel}"
 	sed -i -e "s|\${CALAMARES_VERSION_MAJOR}.\${CALAMARES_VERSION_MINOR}.\${CALAMARES_VERSION_PATCH}|${_ver}-${pkgrel}|g" CMakeLists.txt
 	sed -i -e "s|CALAMARES_VERSION_RC 1|CALAMARES_VERSION_RC 0|g" CMakeLists.txt
+
+
+	install -Dm644 "${srcdir}/"ucode_main.py ${srcdir}/$_pkgname-$pkgver/src/modules/ucode/main.py
+	install -Dm644 "${srcdir}/"ucode_module.desc ${srcdir}/$_pkgname-$pkgver/src/modules/ucode/module.desc
+	install -Dm644 "${srcdir}/"dm_main.py ${srcdir}/$_pkgname-$pkgver/src/modules/displaymanager/main.py
+	install -Dm644 "${srcdir}/"packages_main.py ${srcdir}/$_pkgname-$pkgver/src/modules/packages/main.py
+
 
 }
 
@@ -58,7 +77,7 @@ package() {
 	make DESTDIR="$pkgdir" install
 	#install -Dm644 "../data/manjaro-icon.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/calamares.svg"
 	#install -Dm644 "../data/calamares.desktop" "$pkgdir/usr/share/applications/calamares.desktop"
-	#install -Dm755 "../data/calamares_polkit" "$pkgdir/usr/bin/calamares_polkit"
+	install -Dm755 "../data/calamares_polkit" "$pkgdir/usr/bin/calamares_polkit"
 	#install -Dm644 "../data/49-nopasswd-calamares.rules" "$pkgdir/etc/polkit-1/rules.d/49-nopasswd-calamares.rules"
 	#chmod 750      "$pkgdir"/etc/polkit-1/rules.d
 
