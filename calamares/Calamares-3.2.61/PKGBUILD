@@ -22,7 +22,7 @@ source=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/v$pkgver/calamares-$pkgver.tar.gz
 	"ucode_module.desc"
 	"dm_main.py"
 	"packages_main.py"
-	"calamares-polkit")
+	"calamares_polkit")
 
 sha256sums=('7591b9b60738bdba7b9de2b8da5462ab21006db06a006f0dd21ac5b832711dd2'
 			'SKIP'
