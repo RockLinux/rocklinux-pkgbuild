@@ -10,11 +10,9 @@ license=('GPL')
 install="${pkgname}.install"
 source=('Makefile'
         'rocklinux.gpg'
-	'rocklinux-revoked'
 	'rocklinux-trusted')
 validpgpkeys=('157FED8A9A6B3978DC8FDF52C65DCA0A86EC711')
 md5sums=('SKIP'
-         'SKIP'
          'SKIP'
          'SKIP')
 package() {
